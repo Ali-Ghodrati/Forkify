@@ -124,8 +124,11 @@ function renderSpinner(parentEl) {
   parentEl.insertAdjacentHTML('afterbegin', markup);
 }
 
-async function loadRecipe(id) {
+async function loadRecipe() {
   try {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+
     // Render spinner
     renderSpinner(recipeContainer);
 
@@ -157,7 +160,4 @@ async function loadRecipe(id) {
   }
 }
 
-window.addEventListener('hashchange', function () {
-  const id = location.hash.slice(1);
-  loadRecipe(id);
-});
+['hashchange', 'load'].forEach(ev => window.addEventListener(ev, loadRecipe));
