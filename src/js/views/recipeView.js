@@ -4,6 +4,8 @@ import fracty from 'fracty';
 class RecipeView {
   _parentEl = document.querySelector('.recipe');
   _data;
+  _errorMessage = 'We could not find that recipe. Please try another one!';
+  _message = '';
 
   render(data) {
     this._data = data;
@@ -107,6 +109,36 @@ class RecipeView {
           </svg>
         </a>
       </div>`;
+  }
+
+  renderError(message = this._errorMessage) {
+    const markup = `
+      <div class="error">
+        <div>
+          <svg>
+            <use href="src/img/${icons}#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div>`;
+
+    this.clear();
+    this._parentEl.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  rendermessage(message = this.message) {
+    const markup = `
+      <div class="message">
+        <div>
+          <svg>
+            <use href="src/img/${icons}#icon-smile"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div>`;
+
+    this.clear();
+    this._parentEl.insertAdjacentHTML('afterbegin', markup);
   }
 
   renderSpinner() {
