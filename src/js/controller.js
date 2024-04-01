@@ -14,16 +14,17 @@ async function controlRecipe() {
     // Render spinner
     RecipeView.renderSpinner();
 
-    //Load recipe
+    // Load recipe
     await model.loadRecipe(id);
 
-    //Render recipe
+    // Render recipe
     RecipeView.render(model.state.recipe);
   } catch (err) {
     console.log('hi');
   }
 }
 
-['hashchange', 'load'].forEach(ev =>
-  window.addEventListener(ev, controlRecipe)
-);
+function init() {
+  RecipeView.addHandlerRender(controlRecipe);
+}
+init();
