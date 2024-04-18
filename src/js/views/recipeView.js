@@ -1,20 +1,12 @@
+import View from './view';
+
 import icons from 'url:../../img/icons.svg';
 import fracty from 'fracty';
 
-class RecipeView {
+class RecipeView extends View {
   _parentEl = document.querySelector('.recipe');
-  _data;
   _errorMessage = 'We could not find that recipe. Please try another one!';
   _message = '';
-
-  render(data) {
-    this._data = data;
-
-    const markup = this._generateMarkup();
-    this.clear();
-
-    this._parentEl.insertAdjacentHTML('afterbegin', markup);
-  }
 
   _generateMarkup() {
     return `
@@ -56,6 +48,12 @@ class RecipeView {
               </svg>
             </button>
           </div>
+        </div>
+
+        <div class="recipe__user-generated">
+            <svg>
+              <use href="${icons}#icon-user"></use>
+            </svg>
         </div>
 
         <button class="btn--round">
@@ -109,52 +107,6 @@ class RecipeView {
           </svg>
         </a>
       </div>`;
-  }
-
-  renderError(message = this._errorMessage) {
-    const markup = `
-      <div class="error">
-        <div>
-          <svg>
-            <use href="src/img/${icons}#icon-alert-triangle"></use>
-          </svg>
-        </div>
-        <p>${message}</p>
-      </div>`;
-
-    this.clear();
-    this._parentEl.insertAdjacentHTML('afterbegin', markup);
-  }
-
-  rendermessage(message = this._message) {
-    const markup = `
-      <div class="message">
-        <div>
-          <svg>
-            <use href="src/img/${icons}#icon-smile"></use>
-          </svg>
-        </div>
-        <p>${message}</p>
-      </div>`;
-
-    this.clear();
-    this._parentEl.insertAdjacentHTML('afterbegin', markup);
-  }
-
-  renderSpinner() {
-    const markup = `
-    <div class="spinner">
-      <svg>
-        <use href="${icons}#icon-loader"></use>
-      </svg>
-    </div>`;
-
-    this.clear();
-    this._parentEl.insertAdjacentHTML('afterbegin', markup);
-  }
-
-  clear() {
-    this._parentEl.innerHTML = '';
   }
 
   addHandlerRender(handler) {
