@@ -6,6 +6,7 @@ import PaginationView from './views/paginationView';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import paginationView from './views/paginationView';
 
 // https://forkify-api.herokuapp.com/v2
 
@@ -41,18 +42,29 @@ async function controlSearchResults() {
     await model.loadSearchResults(query);
 
     // Render results
-    ResultsView.render(model.getResultPage(1));
+    ResultsView.render(model.getResultPage());
 
     // Render initiation pagination
-
     PaginationView.render(model.state.search);
   } catch (err) {
     ResultsView.renderError();
   }
 }
 
+function controlPagination(goToPage) {
+  // Update state
+  model.state.search.page = goToPage;
+
+  // Render results
+  ResultsView.render(model.getResultPage(goToPage));
+
+  // Render initiation pagination
+  PaginationView.render(model.state.search);
+}
+
 function init() {
   RecipeView.addHandlerRender(controlRecipe);
   SearchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerBtn(controlPagination);
 }
 init();

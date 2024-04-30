@@ -46,6 +46,8 @@ export async function loadSearchResults(query) {
         publisher: rec.publisher,
       };
     });
+
+    state.search.page = 1;
   } catch (err) {
     throw err;
   }
