@@ -9,6 +9,7 @@ export const state = {
     resultPerPage: RES_PER_PAGE,
     page: 1,
   },
+  bookmarks: [],
 };
 
 export async function loadRecipe(id) {
@@ -68,4 +69,21 @@ export function updateServings(newServing) {
   });
 
   state.recipe.servings = newServing;
+}
+
+export function addBookmark(recipe) {
+  // Add bookmark
+  state.bookmarks.push(recipe);
+
+  // Mark current recipe as bookmark
+  if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+}
+
+export function removeBookmark(id) {
+  // remove bookmark
+  const index = state.bookmarks.findIndex(el => el.id === id);
+  state.bookmarks.splice(index, 1);
+
+  // Mark current recipe as bookmark
+  if (recipe.id === state.recipe.id) state.recipe.bookmarked = false;
 }
