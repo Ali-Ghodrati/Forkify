@@ -3,11 +3,10 @@ import RecipeView from './views/recipeView';
 import SearchView from './views/searchView';
 import ResultsView from './views/resultsView';
 import PaginationView from './views/paginationView';
+import BookmarkView from './views/bookmarkView';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import paginationView from './views/paginationView';
-import recipeView from './views/recipeView';
 
 // https://forkify-api.herokuapp.com/v2
 
@@ -22,6 +21,7 @@ async function controlRecipe() {
 
     // Update Results view to mark selected search result
     ResultsView.update(model.getResultPage());
+    BookmarkView.update(model.state.bookmarks);
 
     // Load recipe
     await model.loadRecipe(id);
@@ -72,17 +72,22 @@ function controlServings(newServings) {
 }
 
 function controlBookmark() {
+  // Add/Remove bookmark
   if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
   else model.removeBookmark(model.state.recipe.id);
 
-  recipeView.update(model.state.recipe);
+  // Update recipe view
+  RecipeView.update(model.state.recipe);
+
+  // Render bookmarks
+  BookmarkView.render(model.state.bookmarks);
 }
 
 function init() {
   RecipeView.addHandlerRender(controlRecipe);
   SearchView.addHandlerSearch(controlSearchResults);
-  paginationView.addHandlerBtn(controlPagination);
-  recipeView.addHandlerUpdateServings(controlServings);
-  recipeView.addHandlerAddBookmark(controlBookmark);
+  PaginationView.addHandlerBtn(controlPagination);
+  RecipeView.addHandlerUpdateServings(controlServings);
+  RecipeView.addHandlerAddBookmark(controlBookmark);
 }
 init();

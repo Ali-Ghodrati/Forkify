@@ -3,8 +3,8 @@ import View from './View';
 import icons from 'url:../../img/icons.svg';
 
 class BookmarkView extends View {
-  _parentEl = document.querySelector('.results');
-  _errorMessage = 'No recipes found for your query! Please try again ;)';
+  _parentEl = document.querySelector('.bookmarks__list');
+  _errorMessage = 'No bookmarks yet. Find a nice recipe and bookmark it :)';
   _message = '';
 
   _generateMarkup() {
