@@ -40,16 +40,21 @@ async function controlSearchResults() {
     if (!query) return;
 
     // Render spinner
+    console.log(1);
     ResultsView.renderSpinner();
+    console.log(2);
 
     // Load results
     await model.loadSearchResults(query);
+    console.log(3);
 
     // Render results
     ResultsView.render(model.getResultPage());
+    console.log(4);
 
     // Render initiation pagination
     PaginationView.render(model.state.search);
+    console.log(5);
   } catch (err) {
     ResultsView.renderError();
   }
