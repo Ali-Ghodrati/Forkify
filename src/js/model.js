@@ -64,8 +64,6 @@ export function getResultPage(page = state.search.page) {
   const start = (page - 1) * state.search.resultPerPage;
   const end = page * state.search.resultPerPage;
 
-  console.log(state.search.results.slice(start, end));
-
   return state.search.results.slice(start, end);
 }
 
@@ -77,12 +75,18 @@ export function updateServings(newServing) {
   state.recipe.servings = newServing;
 }
 
+function persistBookmark() {
+  localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
+}
+
 export function addBookmark(recipe) {
   // Add bookmark
   state.bookmarks.push(recipe);
 
   // Mark current recipe as bookmark
   if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+
+  persistBookmark();
 }
 
 export function removeBookmark(id) {
@@ -92,4 +96,17 @@ export function removeBookmark(id) {
 
   // Mark current recipe as bookmark
   if (id === state.recipe.id) state.recipe.bookmarked = false;
+
+  persistBookmark();
 }
+
+function init() {
+  const storage = localStorage.getItem('bookmarks');
+  if (storage) state.bookmarks = JSON.parse(storage);
+}
+init();
+
+function clearBookmarks() {
+  localStorage.clear('bookmarks');
+}
+// clearBookmarks();

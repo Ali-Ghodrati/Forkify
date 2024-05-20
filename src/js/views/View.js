@@ -11,8 +11,6 @@ export default class View {
 
     const markup = this._generateMarkup();
 
-    console.log(markup);
-
     if (!render) return markup;
 
     this._clear();
