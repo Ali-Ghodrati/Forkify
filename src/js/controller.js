@@ -1,9 +1,11 @@
 import * as model from './model';
+
 import RecipeView from './views/recipeView';
 import SearchView from './views/searchView';
 import ResultsView from './views/resultsView';
 import PaginationView from './views/paginationView';
 import BookmarkView from './views/bookmarkView';
+import addRecipeViews from './views/addRecipeViews';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -89,6 +91,18 @@ function controlBookmark() {
   BookmarkView.render(model.state.bookmarks);
 }
 
+async function controlAddRecipe(newRecipe) {
+  try {
+    addRecipeViews.renderSpinner();
+
+    // Upload the new recipe data
+    await model.uploadRecipe(newRecipe);
+  } catch (err) {
+    console.error(err);
+    addRecipeViews.renderError(err.message);
+  }
+}
+
 function init() {
   BookmarkView.addHandlerRender(controlBookmark);
   RecipeView.addHandlerRender(controlRecipe);
@@ -96,5 +110,6 @@ function init() {
   PaginationView.addHandlerBtn(controlPagination);
   RecipeView.addHandlerUpdateServings(controlServings);
   RecipeView.addHandlerAddBookmark(controlAddBookmark);
+  addRecipeViews.addHandlerUpload(controlAddRecipe);
 }
 init();
