@@ -63,12 +63,12 @@ export default class View {
     this._parentEl.insertAdjacentHTML('afterbegin', markup);
   }
 
-  renderError(message = this._errorMessage) {
+  renderMessage(message = this._message) {
     const markup = `
-      <div class="error">
+      <div class="message">
         <div>
           <svg>
-            <use href="${icons}#icon-alert-triangle"></use>
+            <use href="${icons}#icon-smile"></use>
           </svg>
         </div>
         <p>${message}</p>
