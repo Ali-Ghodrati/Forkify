@@ -10,6 +10,7 @@ import addRecipeViews from './views/addRecipeViews';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import bookmarkView from './views/bookmarkView';
 
 // https://forkify-api.herokuapp.com/v2
 
@@ -105,6 +106,12 @@ async function controlAddRecipe(newRecipe) {
 
     // Success message
     addRecipeViews.renderMessage();
+
+    // Render bookmark view
+    bookmarkView.render(model.state.bookmarks);
+
+    // Change ID in URL
+    window.history.pushState(null, '', `#${model.state.recipe.id}`);
 
     // Close form window
     setTimeout(function () {
